@@ -9,7 +9,19 @@ var applyAlpha = (function() {
 			if ( webKitMaskSupport ) {
 				color.style.WebkitMask = 'url("' + alphaSpriteUrl + '") no-repeat -' + left + 'px -' + top + 'px';
 				done(color);
+				return;
 			}
+
+			var canvas = document.createElement('canvas');
+			var context = canvas.getContext('2d');
+			var width = color.width;
+			var height = color.height;
+			canvas.width = width;
+			canvas.height = height;
+			context.drawImage(alphaSprite, left, top, width, height, 0, 0, width, height);
+			context.globalCompositeOperation = 'source-atop';
+			context.drawImage(color, 0, 0);
+			done(canvas);
 		});
 	};
 }());
