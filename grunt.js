@@ -13,10 +13,11 @@ module.exports = function(grunt) {
     min: {
       dist: {
         src: [
-          'www/js/script.js'
+          'www/js/applyAlpha.js',
+          'www/js/main.js'
         ],
         dest: 'www/js/all.js',
-        separator: ';'
+        separator: ';\n'
       }
     },
     watch: {
@@ -38,9 +39,7 @@ module.exports = function(grunt) {
         devel: true
       },
       globals: {
-        jQuery: true,
-        $: true,
-        cv: true
+        applyAlpha: true
       }
     },
     uglify: {
