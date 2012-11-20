@@ -49,7 +49,7 @@ var parallaxify = (function() {
 		var posInView = item.top + (item.height / 2) - viewTop;
 		var offsetFromCenter = posInView - (windowHeight / 2);
 		var desiredOffset = offsetFromCenter * item.multiplier;
-		var translateOffset = desiredOffset - offsetFromCenter;
+		var translateOffset = Math.floor( desiredOffset - offsetFromCenter );
 		
 		var itemTop = item.top + translateOffset;
 		var itemBottom = itemTop + item.height;
