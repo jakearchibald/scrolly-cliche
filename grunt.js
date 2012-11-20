@@ -14,6 +14,7 @@ module.exports = function(grunt) {
       dist: {
         src: [
           'www/js/applyAlpha.js',
+          'www/js/parallaxify.js',
           'www/js/main.js'
         ],
         dest: 'www/js/all.js',
@@ -39,7 +40,8 @@ module.exports = function(grunt) {
         devel: true
       },
       globals: {
-        applyAlpha: true
+        applyAlpha: true,
+        parallaxify: true
       }
     },
     uglify: {
