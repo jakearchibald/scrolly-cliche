@@ -1,0 +1,6 @@
+// Transition
+	@mixin transition($name) {
+		@each $prefix in -webkit-, '' {
+			#{$prefix}transition: $name;
+		}
+	}

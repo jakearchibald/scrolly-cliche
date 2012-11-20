@@ -1,4 +1,8 @@
-var parallaxify = (function() {
+var parallaxify = (function(window) {
+	var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame || function(func) {
+		setTimeout(func, 1000 / 60);
+	};
+
 	function ParallaxItem(el, multiplier, colorUrl) {
 		this.el = el;
 		this.multiplier = Number(multiplier);
@@ -45,13 +49,29 @@ var parallaxify = (function() {
 	}
 
 	function applyColor(item) {
-		var itemStyle = window.getComputedStyle( item.el );
-		var bgPos = itemStyle.getPropertyValue('background-position').match(/\d+/g);
-		var bgImg = itemStyle.getPropertyValue('background-image').match(/url\(["']*([^"')]+)["']*\)/)[1];
+		var el = item.el;
+		var itemStyle = window.getComputedStyle( el );
+		var bgPos = itemStyle.getPropertyValue('background-position');
+		var bgPosParts = bgPos.match(/\d+/g);
+		var bgImg = itemStyle.getPropertyValue('background-image');
+		var bgImgUrl = bgImg.match(/url\(["']*([^"')]+)["']*\)/)[1];
+		var maskTmp = document.createElement('div');
+		maskTmp.className = 'mask-fader';
+		maskTmp.style.width = el.offsetWidth + 'px';
+		maskTmp.style.height = el.offsetHeight + 'px';
+		maskTmp.style.backgroundPosition = bgPos;
+		maskTmp.style.backgroundImage = bgImg;
+
+		el.appendChild(maskTmp);
+		el.style.background = "none";
 		
-		applyAlpha( item.colorUrl, bgImg, bgPos[0], bgPos[1], function(img) {
-			item.el.style.background = "none";
-			item.el.appendChild(img);
+		applyAlpha( item.colorUrl, bgImgUrl, bgPosParts[0], bgPosParts[1], function(img) {
+			img.className = 'color-fader';
+			el.appendChild(img);
+			requestAnimationFrame(function() {
+				img.style.opacity = '1';
+				maskTmp.style.opacity = '0';
+			});
 		});
 		item.colorNeeded = false;
 	}
@@ -101,4 +121,4 @@ var parallaxify = (function() {
 		calculateInitialOffsets( parallaxItems );
 		positionItems();
 	};
-}());
+}(window));
