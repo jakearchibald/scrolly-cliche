@@ -62,8 +62,8 @@ var parallaxify = (function() {
 		}
 	}
 
-	return function(container) {
-		var parallaxItems = Array.prototype.map.call( document.querySelectorAll('[data-parallax]', container), function(item) {
+	return function() {
+		var parallaxItems = Array.prototype.map.call( document.querySelectorAll('[data-parallax]'), function(item) {
 			return new ParallaxItem( item, item.getAttribute('data-parallax'), item.getAttribute('data-color-href') );
 		});
 
