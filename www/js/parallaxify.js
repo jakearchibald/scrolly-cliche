@@ -45,16 +45,19 @@ var parallaxify = (function() {
 	}
 
 	function positionItem(item, windowHeight, viewTop) {
-		var itemBottom = item.top + item.height;
-		var viewBottom = viewTop + windowHeight;
+		// calculate correct position
+		var posInView = item.top + (item.height / 2) - viewTop;
+		var offsetFromCenter = posInView - (windowHeight / 2);
+		var desiredOffset = offsetFromCenter * item.multiplier;
+		var translateOffset = desiredOffset - offsetFromCenter;
 		
-		// Is the item within the viewport
-		// TODO: we need to cater for the multiplier here (for when it's < 1)
-		if ( itemBottom > viewTop && item.top < viewBottom ) {
-			var posInView = item.top + (item.height / 2) - viewTop;
-			var offsetFromCenter = posInView - (windowHeight / 2);
-			var desiredOffset = offsetFromCenter * item.multiplier;
-			var translateOffset = desiredOffset - offsetFromCenter;
+		var itemTop = item.top + translateOffset;
+		var itemBottom = itemTop + item.height;
+		var viewBottom = viewTop + windowHeight;
+
+		// avoid changing position unless it's in view
+		// TODO: test if this is a worthwhile optimisation
+		if ( itemBottom > viewTop && itemTop < viewBottom ) {
 			setCss( item.el, 'transform', 'translate(0, ' + translateOffset + 'px)' );
 		}
 	}
@@ -64,21 +67,24 @@ var parallaxify = (function() {
 			return new ParallaxItem( item, item.getAttribute('data-parallax'), item.getAttribute('data-color-href') );
 		});
 
-		calculateInitialOffsets(parallaxItems);
-
 		var windowHeight = window.innerHeight;
 
-		window.addEventListener('resize', function() {
-			windowHeight = window.innerHeight;
-		});
-
-		window.addEventListener('scroll', function() {
+		function positionItems() {
 			var viewTop = window.pageYOffset;
 
 			for ( var i = parallaxItems.length; i--; ) {
 				positionItem( parallaxItems[i], windowHeight, viewTop );
 			}
+		}
+
+		window.addEventListener('resize', function() {
+			windowHeight = window.innerHeight;
+			calculateInitialOffsets(parallaxItems);
+			positionItems();
 		});
 
+		window.addEventListener('scroll', positionItems);
+		calculateInitialOffsets(parallaxItems);
+		positionItems();
 	};
 }());
