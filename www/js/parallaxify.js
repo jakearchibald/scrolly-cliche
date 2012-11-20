@@ -51,7 +51,7 @@ var parallaxify = (function() {
 		// Is the item within the viewport
 		// TODO: we need to cater for the multiplier here (for when it's < 1)
 		if ( itemBottom > viewTop && item.top < viewBottom ) {
-			var posInView = item.top - viewTop;
+			var posInView = item.top + (item.height / 2) - viewTop;
 			var offsetFromCenter = posInView - (windowHeight / 2);
 			var desiredOffset = offsetFromCenter * item.multiplier;
 			var translateOffset = desiredOffset - offsetFromCenter;
@@ -79,9 +79,6 @@ var parallaxify = (function() {
 				positionItem( parallaxItems[i], windowHeight, viewTop );
 			}
 		});
-
-		// todo: caluclate offsets
-		// scroll listener
 
 	};
 }());
