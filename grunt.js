@@ -23,7 +23,7 @@ module.exports = function(grunt) {
     },
     watch: {
       files: '<config:min.dist.src>',
-      tasks: 'lint concat'
+      tasks: 'concat'
     },
     jshint: {
       options: {
