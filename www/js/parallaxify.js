@@ -3,7 +3,7 @@ var parallaxify = (function() {
 		this.el = el;
 		this.multiplier = Number(multiplier);
 		this.colorUrl = colorUrl;
-		this.colorTriggered = false;
+		this.colorNeeded = !!colorUrl;
 		this.top = 0;
 		this.height = 0;
 	}
