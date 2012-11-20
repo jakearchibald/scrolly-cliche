@@ -56,10 +56,8 @@ var parallaxify = (function() {
 		var viewBottom = viewTop + windowHeight;
 
 		// avoid changing position unless it's in view
-		// TODO: test if this is a worthwhile optimisation
-		if ( itemBottom > viewTop && itemTop < viewBottom ) {
-			setCss( item.el, 'transform', 'translate(0, ' + translateOffset + 'px)' );
-		}
+		// TODO: can we optimise for out-of-view objects?
+		setCss( item.el, 'transform', 'translate(0, ' + translateOffset + 'px)' );
 	}
 
 	return function() {
