@@ -75,14 +75,14 @@ var parallaxify = (function() {
 			}
 		}
 
-		window.addEventListener('resize', function() {
+		window.addEventListener( 'resize', function() {
 			windowHeight = window.innerHeight;
-			calculateInitialOffsets(parallaxItems);
+			calculateInitialOffsets( parallaxItems );
 			positionItems();
 		});
 
-		window.addEventListener('scroll', positionItems);
-		calculateInitialOffsets(parallaxItems);
+		window.addEventListener( 'scroll', positionItems );
+		calculateInitialOffsets( parallaxItems );
 		positionItems();
 	};
 }());

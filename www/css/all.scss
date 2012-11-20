@@ -27,18 +27,19 @@ body, html {
 }
 
 .cat {
+	position: absolute;
 	background: url(imgs/masks.png) no-repeat 0 -305px;
 	width: 632px;
 	height: 507px;
-	position: absolute;
 	top: 300px;
 	left: 0;
 }
 
 .car {
+	position: absolute;
 	background: url(imgs/masks.png) no-repeat 0 0;
 	width: 912px;
 	height: 302px;
-	top: 0;
+	top: 700px;
 	left: 0;
 }
