@@ -44,6 +44,18 @@ var parallaxify = (function() {
 		});
 	}
 
+	function applyColor(item) {
+		var itemStyle = window.getComputedStyle( item.el );
+		var bgPos = itemStyle.getPropertyValue('background-position').match(/\d+/g);
+		var bgImg = itemStyle.getPropertyValue('background-image').match(/url\(["']*([^"')]+)["']*\)/)[1];
+		
+		applyAlpha( item.colorUrl, bgImg, bgPos[0], bgPos[1], function(img) {
+			item.el.style.background = "none";
+			item.el.appendChild(img);
+		});
+		item.colorNeeded = false;
+	}
+
 	function positionItem(item, windowHeight, viewTop) {
 		// calculate correct position
 		var posInView = item.top + (item.height / 2) - viewTop;
@@ -58,6 +70,10 @@ var parallaxify = (function() {
 		// avoid changing position unless it's in view
 		// TODO: can we optimise for out-of-view objects?
 		setCss( item.el, 'transform', 'translate(0, ' + translateOffset + 'px)' );
+
+		if ( item.colorNeeded && itemBottom > viewTop && itemTop < viewBottom ) {
+			applyColor( item );
+		}
 	}
 
 	return function() {
