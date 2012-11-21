@@ -49,6 +49,7 @@ var parallaxify = (function(window) {
 	}
 
 	function applyColor(item) {
+		item.colorNeeded = false;
 		var el = item.el;
 		var itemStyle = window.getComputedStyle( el );
 		var bgPos = itemStyle.getPropertyValue('background-position');
@@ -73,7 +74,6 @@ var parallaxify = (function(window) {
 				maskTmp.style.opacity = '0';
 			});
 		});
-		item.colorNeeded = false;
 	}
 
 	function positionItem(item, windowHeight, viewTop) {
