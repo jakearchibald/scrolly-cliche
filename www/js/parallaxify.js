@@ -66,7 +66,7 @@ var parallaxify = (function(window) {
 		el.appendChild(maskTmp);
 		el.style.background = "none";
 		
-		applyAlpha( item.colorUrl, bgImgUrl, bgPosParts[0], bgPosParts[1], function(img) {
+		applyAlpha( item.colorUrl, bgImgUrl, Number( bgPosParts[0] ), Number( bgPosParts[1] ), function(img) {
 			img.className = 'color-fader';
 			el.appendChild(img);
 			requestAnimationFrame(function() {
