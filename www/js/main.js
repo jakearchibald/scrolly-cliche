@@ -6,3 +6,4 @@ applyAlpha('imgs/cat.jpg', 'http://localhost/scrolly-cliche/www/css/imgs/masks.p
 	document.body.appendChild(img);
 });*/
 parallaxify();
+touchScroll();

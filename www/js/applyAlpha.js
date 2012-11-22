@@ -1,7 +1,7 @@
 var applyAlpha = (function() {
 	function loadImgs(urls, doneCallback) {
 		var remaining = urls.length;
-		var imgs = [];
+		var imgs;
 
 		function imgLoad() {
 			if (!--remaining) {
@@ -9,11 +9,11 @@ var applyAlpha = (function() {
 			}
 		}
 
-		urls.forEach(function(url) {
+		imgs = urls.map(function(url) {
 			var img = new Image();
-			imgs.push(img);
 			img.onload = imgLoad;
 			img.src = url;
+			return img;
 		});
 	}
 

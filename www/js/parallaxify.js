@@ -81,7 +81,7 @@ var parallaxify = (function(window) {
 		var posInView = item.top + (item.height / 2) - viewTop;
 		var offsetFromCenter = posInView - (windowHeight / 2);
 		var desiredOffset = offsetFromCenter * item.multiplier;
-		var translateOffset = Math.floor( desiredOffset - offsetFromCenter );
+		var translateOffset = desiredOffset - offsetFromCenter;
 		
 		var itemTop = item.top + translateOffset;
 		var itemBottom = itemTop + item.height;
@@ -89,7 +89,9 @@ var parallaxify = (function(window) {
 
 		// avoid changing position unless it's in view
 		// TODO: can we optimise for out-of-view objects?
-		setCss( item.el, 'transform', 'translate(0, ' + translateOffset + 'px)' );
+		setCss( item.el, 'transform', 'translate(0, ' + Math.floor(translateOffset) + 'px)' );
+		// Alernative no-hardware implementation
+		//setCss( item.el, 'margin-top', Math.floor(translateOffset) + 'px' );
 
 		if ( item.colorNeeded && itemBottom > viewTop && itemTop < viewBottom ) {
 			applyColor( item );
@@ -104,7 +106,7 @@ var parallaxify = (function(window) {
 		var windowHeight = window.innerHeight;
 
 		function positionItems() {
-			var viewTop = window.pageYOffset;
+			var viewTop = (-parseFloat(document.documentElement.style.top)) || window.pageYOffset;
 
 			for ( var i = parallaxItems.length; i--; ) {
 				positionItem( parallaxItems[i], windowHeight, viewTop );
@@ -118,6 +120,7 @@ var parallaxify = (function(window) {
 		});
 
 		window.addEventListener( 'scroll', positionItems );
+		window.positionItems = positionItems;
 		calculateInitialOffsets( parallaxItems );
 		positionItems();
 	};

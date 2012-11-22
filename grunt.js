@@ -15,6 +15,7 @@ module.exports = function(grunt) {
         src: [
           'www/js/applyAlpha.js',
           'www/js/parallaxify.js',
+          'www/js/touchScroll.js',
           'www/js/main.js'
         ],
         dest: 'www/js/all.js',
@@ -40,8 +41,6 @@ module.exports = function(grunt) {
         devel: true
       },
       globals: {
-        applyAlpha: true,
-        parallaxify: true
       }
     },
     uglify: {
@@ -51,7 +50,7 @@ module.exports = function(grunt) {
   });
 
   // Default task.
-  grunt.registerTask('default', 'lint concat');
+  grunt.registerTask('default', 'concat lint');
   grunt.registerTask('build', 'lint min');
 
 };
