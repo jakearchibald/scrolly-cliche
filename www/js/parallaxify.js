@@ -104,10 +104,9 @@ var parallaxify = (function(window) {
 		});
 
 		var windowHeight = window.innerHeight;
+		var viewTop = 0;
 
 		function positionItems() {
-			var viewTop = (-parseFloat(document.documentElement.style.top)) || window.pageYOffset;
-
 			for ( var i = parallaxItems.length; i--; ) {
 				positionItem( parallaxItems[i], windowHeight, viewTop );
 			}
@@ -119,8 +118,17 @@ var parallaxify = (function(window) {
 			positionItems();
 		});
 
-		window.addEventListener( 'scroll', positionItems );
-		window.positionItems = positionItems;
+		window.addEventListener( 'scroll', function() {
+			viewTop = window.pageYOffset;
+			positionItems();
+		});
+
+		window.addEventListener( 'touchscroll', function() {
+			viewTop = touchScroll.scrollTop;
+			positionItems();
+		});
+		
+		window.scrollTo(0,0);
 		calculateInitialOffsets( parallaxItems );
 		positionItems();
 	};
